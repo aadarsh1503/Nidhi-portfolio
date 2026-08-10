@@ -60,6 +60,87 @@ body {
   pointer-events: none;
 }
 
+/* Mobile Gradient Background */
+.mobile-gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: 
+    radial-gradient(ellipse at 20% 30%, rgba(46, 204, 113, 0.35) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(22, 160, 133, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(46, 204, 113, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 10% 80%, rgba(46, 204, 113, 0.25) 0%, transparent 40%);
+  animation: mobileGradientShift 12s ease-in-out infinite;
+}
+
+.mobile-gradient-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(46, 204, 113, 0.4) 0%, transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(22, 160, 133, 0.35) 0%, transparent 30%);
+  animation: mobileGradientPulse 8s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+.mobile-gradient-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 50% 20%, rgba(46, 204, 113, 0.3) 0%, transparent 25%),
+    radial-gradient(circle at 80% 80%, rgba(22, 160, 133, 0.25) 0%, transparent 25%);
+  animation: mobileGradientFloat 10s ease-in-out infinite reverse;
+  opacity: 0.7;
+}
+
+@keyframes mobileGradientShift {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  33% {
+    opacity: 0.9;
+    transform: scale(1.1) rotate(2deg);
+  }
+  66% {
+    opacity: 0.95;
+    transform: scale(1.05) rotate(-2deg);
+  }
+}
+
+@keyframes mobileGradientPulse {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15) translateY(-10px);
+    opacity: 0.6;
+  }
+}
+
+@keyframes mobileGradientFloat {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.9;
+  }
+}
+
 /* Progress Bar */
 .progress {
   position: fixed;
@@ -815,5 +896,29 @@ body {
   .footer-links {
     flex-direction: column;
     align-items: center;
+  }
+
+  /* Mobile Performance Optimizations */
+  * {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+
+  .card,
+  .glass-box,
+  .skill-box {
+    will-change: auto;
+  }
+
+  .card:hover,
+  .glass-box:hover,
+  .skill-box:hover {
+    transform: none;
+  }
+
+  .tag-item:hover,
+  .mobile-menu-link:hover {
+    transform: none;
   }
 }

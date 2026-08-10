@@ -244,7 +244,7 @@ function GlowingOrb() {
 }
 
 // Dynamic Scene Controller
-function Scene({ section }) {
+function Scene({ section, isMobile }) {
   return (
     <>
       <ambientLight intensity={0.3} />
@@ -253,51 +253,54 @@ function Scene({ section }) {
       
       {section === 0 && (
         <>
-          <DNAHelix />
-          <Particles count={300} />
+          {!isMobile && <DNAHelix />}
+          <Particles count={isMobile ? 100 : 300} />
         </>
       )}
       
       {section === 1 && (
         <>
-          <GlowingOrb />
-          <Particles count={200} />
+          {!isMobile && <GlowingOrb />}
+          <Particles count={isMobile ? 80 : 200} />
         </>
       )}
       
       {section === 2 && (
         <>
-          <GlowingOrb />
-          <Stars radius={50} depth={50} count={3000} factor={4} fade speed={1} />
+          {!isMobile && <GlowingOrb />}
+          {!isMobile && <Stars radius={50} depth={50} count={1500} factor={3} fade speed={1} />}
+          {isMobile && <Particles count={100} />}
         </>
       )}
       
       {section === 3 && (
         <>
-          <Galaxy />
+          {!isMobile ? <Galaxy /> : <Particles count={150} />}
         </>
       )}
       
       {section === 4 && (
         <>
-          <NeuralNetwork />
-          <Particles count={400} />
+          {!isMobile && <NeuralNetwork />}
+          <Particles count={isMobile ? 120 : 400} />
         </>
       )}
       
       {section === 5 && (
         <>
-          <Float speed={1.5} rotationIntensity={0.5}>
-            <mesh>
-              <torusGeometry args={[2, 0.5, 16, 100]} />
-              <meshStandardMaterial color="#2ecc71" wireframe />
-            </mesh>
-          </Float>
-          <Particles count={300} />
+          {!isMobile && (
+            <Float speed={1.5} rotationIntensity={0.5}>
+              <mesh>
+                <torusGeometry args={[2, 0.5, 16, 100]} />
+                <meshStandardMaterial color="#2ecc71" wireframe />
+              </mesh>
+            </Float>
+          )}
+          <Particles count={isMobile ? 100 : 300} />
         </>
       )}
       
-      <Environment preset="night" />
+      {!isMobile && <Environment preset="night" />}
     </>
   )
 }
@@ -305,16 +308,29 @@ function Scene({ section }) {
 function App() {
   const [currentSection, setCurrentSection] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const { scrollYProgress } = useScroll()
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Initialize Lenis
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.5,
+      duration: isMobile ? 1 : 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
-      smooth: true,
+      smooth: !isMobile,
       mouseMultiplier: 1,
       smoothTouch: false,
       touchMultiplier: 2,
@@ -335,7 +351,7 @@ function App() {
       lenis.destroy()
       delete window.lenis
     }
-  }, [])
+  }, [isMobile])
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.onChange((latest) => {
@@ -348,13 +364,22 @@ function App() {
   return (
     <div className="app">
       {/* 3D Background */}
-      <div className="three-bg">
-        <Canvas camera={{ position: [0, 0, 6], fov: 75 }}>
-          <Suspense fallback={null}>
-            <Scene section={currentSection} />
-          </Suspense>
-        </Canvas>
-      </div>
+      {!isMobile && (
+        <div className="three-bg">
+          <Canvas 
+            camera={{ position: [0, 0, 6], fov: 75 }}
+            dpr={[1, 1.5]}
+            performance={{ min: 0.5 }}
+          >
+            <Suspense fallback={null}>
+              <Scene section={currentSection} isMobile={isMobile} />
+            </Suspense>
+          </Canvas>
+        </div>
+      )}
+      
+      {/* Mobile gradient background */}
+      {isMobile && <div className="mobile-gradient-bg" />}
 
       {/* Progress Bar */}
       <motion.div className="progress" style={{ scaleX: scrollYProgress }} />
