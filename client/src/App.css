@@ -150,7 +150,7 @@ body {
   height: 4px;
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   transform-origin: 0%;
-  z-index: 100;
+  z-index: 140;
   box-shadow: 0 0 20px var(--glow);
 }
 
@@ -167,7 +167,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 99;
+  z-index: 150;
 }
 
 .nav-logo {
@@ -602,8 +602,9 @@ body {
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  z-index: 101;
+  z-index: 200;
   position: relative;
+  touch-action: manipulation;
 }
 
 .hamburger span {
@@ -628,7 +629,7 @@ body {
   bottom: 0;
   background: rgba(5, 8, 16, 0.9);
   backdrop-filter: blur(10px);
-  z-index: 98;
+  z-index: 160;
 }
 
 /* Mobile Menu */
@@ -643,7 +644,7 @@ body {
   backdrop-filter: blur(30px);
   border-left: 2px solid rgba(46, 204, 113, 0.3);
   box-shadow: -10px 0 60px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(46, 204, 113, 0.05);
-  z-index: 100;
+  z-index: 170;
   overflow-y: auto;
 }
 
@@ -688,6 +689,7 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   line-height: 1;
+  touch-action: manipulation;
 }
 
 .mobile-menu-close:hover {
@@ -1026,14 +1028,16 @@ body {
     gap: 1rem;
   }
 
-  /* Mobile Performance Optimizations */
-  * {
+  /* Mobile Performance Optimizations — only target specific elements, not * */
+  .card,
+  .glass-box,
+  .skill-box,
+  .tag-item,
+  .btn {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    perspective: 1000;
-    -webkit-perspective: 1000;
   }
 
   /* 3D bg on mobile: higher opacity, no blur for better visibility */
