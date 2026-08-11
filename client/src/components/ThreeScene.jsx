@@ -2,44 +2,28 @@ import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment, Stars, Float } from '@react-three/drei'
 import {
-  DNAHelix, DNAHelixMobile,
-  Particles, ParticlesMobile,
-  NeuralNetwork, NeuralNetworkMobile,
-  Galaxy, GalaxyMobile,
-  GlowingOrb, GlowingOrbMobile
+  DNAHelix, Particles, NeuralNetwork, Galaxy, GlowingOrb
 } from './3DObjects'
+import {
+  MobileHero, MobileAbout, MobileEducation,
+  MobileAchievements, MobileSkills, MobileInterests
+} from './3DObjectsMobile'
 
 function MobileScene({ section }) {
   return (
     <>
-      <ambientLight intensity={0.5} />
-
-      {section === 0 && (
-        <>
-          <DNAHelixMobile />
-          <ParticlesMobile count={50} />
-        </>
-      )}
-      {section === 1 && <GlowingOrbMobile />}
+      <ambientLight intensity={0.6} />
+      {section === 0 && <MobileHero />}
+      {section === 1 && <MobileAbout />}
       {section === 2 && (
         <>
-          <GlowingOrbMobile />
-          <Stars radius={40} depth={30} count={400} factor={3} fade speed={0.5} />
+          <MobileEducation />
+          <Stars radius={40} depth={30} count={500} factor={3} fade speed={0.4} />
         </>
       )}
-      {section === 3 && <GalaxyMobile />}
-      {section === 4 && (
-        <>
-          <NeuralNetworkMobile />
-          <ParticlesMobile count={50} />
-        </>
-      )}
-      {section === 5 && (
-        <mesh>
-          <torusGeometry args={[2, 0.5, 6, 24]} />
-          <meshBasicMaterial color="#2ecc71" wireframe />
-        </mesh>
-      )}
+      {section === 3 && <MobileAchievements />}
+      {section === 4 && <MobileSkills />}
+      {section === 5 && <MobileInterests />}
     </>
   )
 }
