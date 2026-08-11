@@ -1,34 +1,9 @@
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment, Stars, Float } from '@react-three/drei'
-import {
-  DNAHelix, Particles, NeuralNetwork, Galaxy, GlowingOrb
-} from './3DObjects'
-import {
-  MobileHero, MobileAbout, MobileEducation,
-  MobileAchievements, MobileSkills, MobileInterests
-} from './3DObjectsMobile'
+import { DNAHelix, Particles, NeuralNetwork, Galaxy, GlowingOrb } from './3DObjects'
 
-function MobileScene({ section }) {
-  return (
-    <>
-      <ambientLight intensity={0.6} />
-      {section === 0 && <MobileHero />}
-      {section === 1 && <MobileAbout />}
-      {section === 2 && (
-        <>
-          <MobileEducation />
-          <Stars radius={40} depth={30} count={500} factor={3} fade speed={0.4} />
-        </>
-      )}
-      {section === 3 && <MobileAchievements />}
-      {section === 4 && <MobileSkills />}
-      {section === 5 && <MobileInterests />}
-    </>
-  )
-}
-
-function DesktopScene({ section }) {
+function Scene({ section }) {
   return (
     <>
       <ambientLight intensity={0.3} />
@@ -82,21 +57,18 @@ export default function ThreeScene({ currentSection, isMobile }) {
     <div className="three-bg">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 75 }}
-        dpr={isMobile ? 0.75 : [1, 2]}
+        dpr={isMobile ? [1, 1.5] : [1, 2]}
         gl={{
-          antialias: false,
+          antialias: !isMobile,
           powerPreference: isMobile ? 'low-power' : 'high-performance',
           depth: true,
           stencil: false,
           alpha: false
         }}
-        performance={{ min: isMobile ? 0.2 : 0.5 }}
+        performance={{ min: isMobile ? 0.3 : 0.5 }}
       >
         <Suspense fallback={null}>
-          {isMobile
-            ? <MobileScene section={currentSection} />
-            : <DesktopScene section={currentSection} />
-          }
+          <Scene section={currentSection} />
         </Suspense>
       </Canvas>
     </div>

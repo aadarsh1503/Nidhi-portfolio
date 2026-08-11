@@ -1,7 +1,31 @@
 import { motion } from 'framer-motion'
 import { FaGraduationCap, FaBook } from 'react-icons/fa'
 
-export default function Education() {
+export default function Education({ isMobile }) {
+  if (isMobile) {
+    return (
+      <section id="education" className="section education">
+        <div className="container">
+          <h2 className="heading">Education</h2>
+          <div className="grid-2">
+            <div className="card">
+              <FaGraduationCap className="icon" />
+              <div className="year">2024 - 2026</div>
+              <h3>M.Sc. Zoology</h3>
+              <p>Kumaun University</p>
+            </div>
+            <div className="card">
+              <FaBook className="icon" />
+              <div className="year">2021 - 2024</div>
+              <h3>B.Sc. Zoology, Botany & Chemistry</h3>
+              <p>Kumaun University</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section id="education" className="section education">
       <div className="container">
@@ -12,7 +36,6 @@ export default function Education() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="heading">Education</h2>
-          
           <div className="grid-2">
             <motion.div
               className="card"
@@ -26,7 +49,6 @@ export default function Education() {
               <h3>M.Sc. Zoology</h3>
               <p>Kumaun University</p>
             </motion.div>
-
             <motion.div
               className="card"
               initial={{ opacity: 0, x: 50 }}

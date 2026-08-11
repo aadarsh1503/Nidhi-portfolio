@@ -76,12 +76,12 @@ function App() {
       
       <Navigation mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       
-      <Hero />
-      <About />
-      <Education />
-      <Achievements />
-      <Skills />
-      <Interests />
+      <Hero isMobile={isMobile} />
+      <About isMobile={isMobile} />
+      <Education isMobile={isMobile} />
+      <Achievements isMobile={isMobile} />
+      <Skills isMobile={isMobile} />
+      <Interests isMobile={isMobile} />
       <Footer />
     </div>
   )

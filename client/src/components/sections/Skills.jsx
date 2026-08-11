@@ -1,29 +1,67 @@
 import { motion } from 'framer-motion'
 
-export default function Skills() {
-  const skillGroups = [
-    {
-      title: "🔬 Subject Expertise",
-      skills: ["Zoology", "Life Sciences", "General Science", "Animal Sciences", "Environmental Science", "Wildlife Biology"]
-    },
-    {
-      title: "🎯 Teaching & Communication",
-      skills: ["Science Education", "Public Speaking", "Concept Simplification", "Quick Learner"]
-    },
-    {
-      title: "💻 Research & Technical",
-      skills: ["Research Writing", "Poster Making", "MS Office", "PowerPoint", "Excel"]
-    },
-    {
-      title: "✨ Personal Attributes",
-      skills: ["Disciplined", "Organized", "Time Management", "Current Affairs Aware"]
-    }
-  ]
+const skillGroups = [
+  {
+    title: "🔬 Subject Expertise",
+    skills: ["Zoology", "Life Sciences", "General Science", "Animal Sciences", "Environmental Science", "Wildlife Biology"]
+  },
+  {
+    title: "🎯 Teaching & Communication",
+    skills: ["Science Education", "Public Speaking", "Concept Simplification", "Quick Learner"]
+  },
+  {
+    title: "💻 Research & Technical",
+    skills: ["Research Writing", "Poster Making", "MS Office", "PowerPoint", "Excel"]
+  },
+  {
+    title: "✨ Personal Attributes",
+    skills: ["Disciplined", "Organized", "Time Management", "Current Affairs Aware"]
+  }
+]
 
-  const languages = [
-    { name: "Hindi", level: "Native", width: "100%" },
-    { name: "English", level: "Proficient", width: "90%" }
-  ]
+const languages = [
+  { name: "Hindi", level: "Native", width: "100%" },
+  { name: "English", level: "Proficient", width: "90%" }
+]
+
+export default function Skills({ isMobile }) {
+  if (isMobile) {
+    return (
+      <section id="skills" className="section skills">
+        <div className="container">
+          <h2 className="heading">Skills & Expertise</h2>
+          <div className="skills-grid">
+            {skillGroups.map((group, i) => (
+              <div key={i} className="skill-box">
+                <h3>{group.title}</h3>
+                <div className="tags">
+                  {group.skills.map((skill, j) => (
+                    <span key={j} className="tag-item">{skill}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className="skill-box languages">
+              <h3>🗣️ Languages</h3>
+              <div className="lang-list">
+                {languages.map((lang, i) => (
+                  <div key={i} className="lang-item">
+                    <div className="lang-header">
+                      <span>{lang.name}</span>
+                      <span className="level">{lang.level}</span>
+                    </div>
+                    <div className="bar">
+                      <div className="fill" style={{ width: lang.width }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="skills" className="section skills">
@@ -35,7 +73,6 @@ export default function Skills() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="heading">Skills & Expertise</h2>
-
           <div className="skills-grid">
             {skillGroups.map((group, i) => (
               <motion.div
@@ -64,7 +101,6 @@ export default function Skills() {
                 </div>
               </motion.div>
             ))}
-
             <motion.div
               className="skill-box languages"
               initial={{ opacity: 0, y: 30 }}
@@ -81,7 +117,7 @@ export default function Skills() {
                       <span className="level">{lang.level}</span>
                     </div>
                     <div className="bar">
-                      <motion.div 
+                      <motion.div
                         className="fill"
                         initial={{ width: 0 }}
                         whileInView={{ width: lang.width }}

@@ -1,12 +1,30 @@
 import { motion } from 'framer-motion'
 import { FaMicroscope, FaLeaf, FaChalkboardTeacher } from 'react-icons/fa'
 
-export default function Interests() {
-  const interests = [
-    { Icon: FaMicroscope, title: "Zoology & Animal Sciences" },
-    { Icon: FaLeaf, title: "Environmental Science & Wildlife Biology" },
-    { Icon: FaChalkboardTeacher, title: "Science Education & Academic Research" }
-  ]
+const interests = [
+  { Icon: FaMicroscope, title: "Zoology & Animal Sciences" },
+  { Icon: FaLeaf, title: "Environmental Science & Wildlife Biology" },
+  { Icon: FaChalkboardTeacher, title: "Science Education & Academic Research" }
+]
+
+export default function Interests({ isMobile }) {
+  if (isMobile) {
+    return (
+      <section id="interests" className="section interests">
+        <div className="container">
+          <h2 className="heading">Areas of Interest</h2>
+          <div className="grid-3">
+            {interests.map((item, i) => (
+              <div key={i} className="card interest-card">
+                <item.Icon className="icon-large" />
+                <h3>{item.title}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="interests" className="section interests">
@@ -18,7 +36,6 @@ export default function Interests() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="heading">Areas of Interest</h2>
-          
           <div className="grid-3">
             {interests.map((item, i) => (
               <motion.div
